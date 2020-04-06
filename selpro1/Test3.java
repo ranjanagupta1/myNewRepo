@@ -7,19 +7,55 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+
 
 public class Test3 {
 
 	WebDriver driver = null;
 	static WebElement element = null;
 	
-	public static void main(String[] args){
+@BeforeTest
+@Parameters("browser")
+public void setup(String browser) throws Exception{
+	System.out.println("Browser name is : " + browser);
+
+//if(browser.equalsIgnoreCase("firefox")){
+//System.setProperty("webdriver.gecko.driver", "C:\\Users\\DELL\\Downloads\\geckodriver.exe");
+//driver = new FirefoxDriver();
+//}
+ 
+//else
+	if(browser.equalsIgnoreCase("chrome")){
+	System.setProperty("webdriver.chrome.driver", "C:\\Users\\DELL\\Downloads\\chromedriver_win32\\chromedriver.exe");
+    WebDriver driver = new ChromeDriver();
+}
+
+else if(browser.equalsIgnoreCase("ie")){
+	
+	System.setProperty("webdriver.ie.driver","C:\\Users\\DELL\\Downloads\\IEDriverServer.exe");
+	 WebDriver driver = new InternetExplorerDriver();
+	}
+	
+else{
+throw new Exception("Browser is not correct");
+}
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+}
+
+
+@Test	
+public void testExecution(){
 		
 		String keyword = "Instawork";
 		String webSite = "www.instawork.com";
 		
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\DELL\\Downloads\\chromedriver_win32\\chromedriver.exe");
-	    WebDriver driver = new ChromeDriver();
 		Boolean found = false;
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -64,9 +100,14 @@ public class Test3 {
 				}
 			}
 			}
-		driver.close();
+		
 	}
 
+@AfterTest
+public void teardown() {
+	driver.close();
+	System.out.println("Test is Successfull");
+}
 		 }
 
 
