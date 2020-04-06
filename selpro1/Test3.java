@@ -18,18 +18,17 @@ import org.testng.annotations.Test;
 
 public class Test3 {
 
-	WebDriver driver = null;
-	static WebElement element = null;
+	WebDriver driver;
 	
 @BeforeTest
 @Parameters("browser")
 public void setup(String browser) throws Exception{
 	System.out.println("Browser name is : " + browser);
 
-//if(browser.equalsIgnoreCase("firefox")){
-//System.setProperty("webdriver.gecko.driver", "C:\\Users\\DELL\\Downloads\\geckodriver.exe");
-//driver = new FirefoxDriver();
-//}
+if(browser.equalsIgnoreCase("firefox")){
+System.setProperty("webdriver.gecko.driver", "C:\\Users\\DELL\\Downloads\\geckodriver.exe");
+driver = new FirefoxDriver();
+}
  
 //else
 	if(browser.equalsIgnoreCase("chrome")){
@@ -55,6 +54,9 @@ public void testExecution(){
 		
 		String keyword = "Instawork";
 		String webSite = "www.instawork.com";
+		
+		WebDriver driver = null;
+		WebElement element = null;
 		
 		Boolean found = false;
 		driver.manage().window().maximize();
